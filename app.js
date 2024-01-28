@@ -1,11 +1,14 @@
-const express = require('express')
-const morgan = require('morgan')
-const cors = require('cors')
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv").config();
+
+const { DB_HOST } = process.env;
 
 
 
-
-const contactsRouter = require("./routes/contactsRouter") 
+const contactsRouter = require("./routes/contactsRouter");
 
 const app = express();
 
@@ -22,8 +25,18 @@ app.use((_, res) => {
 app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
+  next()
 });
 
+
+
+mongoose
+  .connect(DB_HOST)
+  .then(() => console.log("DB connected"))
+  .catch((err) => {
+    console.error(err.message);
+    process.exit(1);
+  });
 app.listen(3000, () => {
   console.log("Server is running. Use our API on port: 3000");
 });
