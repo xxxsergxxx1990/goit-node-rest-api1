@@ -1,4 +1,4 @@
-const contacts = require("../services/contactsServices");
+// const contacts = require("../services/contactsServices");
 const HttpError = require("../helpers/HttpError");
 const Contact = require("../models/contacts");
 
@@ -73,32 +73,16 @@ const deleteContact = async (req, res, next) => {
 };
 
 const updateFavorite = async (req, res, next) => {
+  const { favorite } = req.body;
+  const { id } = req.params;
+  const result = await Contact.findByIdAndUpdate(id, favorite, { new: true });
+
   try {
-    const { favorite } = req.body;
-    const { id } = req.params;
-
-    if (favorite === null || typeof favorite !== "boolean") {
-      return res
-        .status(400)
-        .json({ message: "Invalid value for the 'favorite' field" });
-    }
-
-    const result = await Contact.findByIdAndUpdate(
-      id,
-      { favorite },
-      { new: true }
-    );
-
     if (!result) {
-      return res.status(404).json({ message: "Not found" });
+      throw HttpError(404, `Contact with id = ${id} not found`);
     }
-
     res.status(200).json(result);
   } catch (error) {
-    if (error.name === "CastError") {
-      return res.status(400).json({ message: "Invalid contact ID" });
-    }
-
     next();
   }
 };
