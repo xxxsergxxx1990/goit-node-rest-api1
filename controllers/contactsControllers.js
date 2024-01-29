@@ -8,7 +8,7 @@ const getAllContacts = async (req, res, next) => {
 
     return res.status(200).json(result);
   } catch (error) {
-    next(error);
+    next();
   }
 };
 
@@ -22,14 +22,17 @@ const getOneContact = async (req, res, next) => {
     }
     res.json(result);
   } catch (error) {
-    next(error);
+    next();
   }
 };
 
 const createContact = async (req, res, next) => {
   try {
-    const result = await Contact.create(req.body);
+    if (!req.body) {
+      throw HttpError(400, "Request body is missing");
+    }
 
+    const result = await Contact.create(req.body);
     res.status(201).json(result);
   } catch (error) {
     next(error);
@@ -50,21 +53,22 @@ const updateContact = async (req, res, next) => {
     }
     res.json(result);
   } catch (error) {
-    next(error);
+    next();
   }
 };
 
 const deleteContact = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await Contact.findOneAndDelete(id);
+    const result = await Contact.findOneAndDelete({ _id: id });
 
     if (!result) {
       throw HttpError(404);
     }
+
     res.json(result);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next();
   }
 };
 
@@ -73,8 +77,10 @@ const updateFavorite = async (req, res, next) => {
     const { favorite } = req.body;
     const { id } = req.params;
 
-    if (favorite === undefined) {
-      return res.status(400).json({ message: "Favorite field is required" });
+    if (favorite === null || typeof favorite !== "boolean") {
+      return res
+        .status(400)
+        .json({ message: "Invalid value for the 'favorite' field" });
     }
 
     const result = await Contact.findByIdAndUpdate(
@@ -84,7 +90,7 @@ const updateFavorite = async (req, res, next) => {
     );
 
     if (!result) {
-      return res.status(404).json({ message: "Not found " });
+      return res.status(404).json({ message: "Not found" });
     }
 
     res.status(200).json(result);
@@ -93,9 +99,10 @@ const updateFavorite = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid contact ID" });
     }
 
-    next(error);
+    next();
   }
 };
+
 module.exports = {
   getAllContacts,
   getOneContact,
