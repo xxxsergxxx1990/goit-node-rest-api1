@@ -1,7 +1,7 @@
 // const contacts = require("../services/contactsServices");
 const HttpError = require("../helpers/HttpError");
 const Contact = require("../models/contacts");
-
+const mongoose = require("mongoose");
 const getAllContacts = async (req, res, next) => {
   try {
     const result = await Contact.find({});
@@ -15,14 +15,21 @@ const getAllContacts = async (req, res, next) => {
 const getOneContact = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await Contact.findById(id);
+
+     const result = await Contact.findById(id);
+   
+ if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw HttpError(400, "Invalid contact ID");
+    }
+  
 
     if (!result) {
-      throw HttpError(404);
+      throw HttpError(404, "Contact not found");
     }
+
     res.json(result);
   } catch (error) {
-    next();
+    next(error);
   }
 };
 
@@ -53,7 +60,7 @@ const updateContact = async (req, res, next) => {
     }
     res.json(result);
   } catch (error) {
-    next();
+    next(error);
   }
 };
 
@@ -67,8 +74,8 @@ const deleteContact = async (req, res, next) => {
     }
 
     res.json(result);
-  } catch (err) {
-    next();
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -83,7 +90,7 @@ const updateFavorite = async (req, res, next) => {
     }
     res.status(200).json(result);
   } catch (error) {
-    next();
+    next(error);
   }
 };
 
