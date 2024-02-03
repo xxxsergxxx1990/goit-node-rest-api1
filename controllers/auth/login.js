@@ -1,6 +1,14 @@
 const bcrypt = require("bcrypt");
 const User = require("../../models/users");
 const { HttpError } = require("../../helpers/HttpError");
+const jwt = require('jsonwebtoken')
+
+
+const {JWT_SECRET} = process.env
+
+
+
+
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -20,7 +28,12 @@ const login = async (req, res, next) => {
       throw HttpError(401, " Password is not valid");
     }
 
-    res.json({ token: "<TOKEN>" });
+const token = jwt.sign({id:user.id},JWT_SECRET,{expiresIn:'300m'})
+
+
+
+
+    res.json({ token });
   } catch (error) {
     next(error);
   }
