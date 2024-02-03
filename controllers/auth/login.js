@@ -12,7 +12,7 @@ const login = async (req, res, next) => {
       throw HttpError(401, "Email  is not valid");
     }
 
-    const isValidPassword = bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
     console.log("isValidPassword:", isValidPassword);
 
