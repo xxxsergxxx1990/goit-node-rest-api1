@@ -23,11 +23,10 @@ contactsRouter.put(
   contacts.updateContact
 );
 
-
 contactsRouter.patch(
-    "/:id/favorite",
-    validateBody(sсhema.updatefavoriteSchema),
-    contacts.updateFavorite
-  );
-  
+  "/:id/favorite",
+  validateBody(sсhema.updatefavoriteSchema),
+  contacts.updateFavorite
+);
+
 module.exports = contactsRouter;

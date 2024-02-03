@@ -1,5 +1,5 @@
 // const contacts = require("../services/contactsServices");
-const HttpError = require("../helpers/HttpError");
+const {HttpError} = require("../helpers/HttpError");
 const Contact = require("../models/contacts");
 const mongoose = require("mongoose");
 const getAllContacts = async (req, res, next) => {

@@ -17,9 +17,17 @@ const updateContactSchema = Joi.object({
 const updatefavoriteSchema = Joi.object({
     favorite:Joi.boolean().required(),
 })
+const userSchema = Joi.object({
+    email:Joi.string().required(),
+    password:Joi.string().required()
+})
+
+
+
 
 module.exports = {
     createContactSchema,
     updateContactSchema,
-    updatefavoriteSchema
+    updatefavoriteSchema,
+    userSchema
 }
