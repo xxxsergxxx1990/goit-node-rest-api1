@@ -17,7 +17,7 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
     console.log("User:", user);
     if (!user) {
-      throw HttpError(401, "Email  is not valid");
+      throw HttpError(401, "login || password  is not valid");
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
@@ -25,7 +25,7 @@ const login = async (req, res, next) => {
     console.log("isValidPassword:", isValidPassword);
 
     if (!isValidPassword) {
-      throw HttpError(401, " Password is not valid");
+      throw HttpError(401, " login || password is not valid");
     }
 
 const token = jwt.sign({id:user.id},JWT_SECRET,{expiresIn:'300m'})
