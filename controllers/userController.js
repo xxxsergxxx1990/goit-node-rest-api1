@@ -1,5 +1,4 @@
-
-const { HttpError } = require('../helpers/HttpError');
+const { HttpError } = require("../helpers/HttpError");
 
 const logout = async (req, res, next) => {
   const userId = req.user._id;
@@ -8,7 +7,7 @@ const logout = async (req, res, next) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return next(HttpError(401, 'Not authorized'));
+      return next(HttpError(401, "Not authorized"));
     }
 
     user.token = null;
@@ -20,23 +19,22 @@ const logout = async (req, res, next) => {
   }
 };
 
-
 const getCurrentUser = async (req, res, next) => {
-    const userId = req.user._id;
-  
-    try {
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return next(HttpError(401, 'Not authorized'));
-      }
-  
-      res.json({
-        email: user.email,
-        subscription: user.subscription,
-      });
-    } catch (error) {
-      next(error);
+  const userId = req.user._id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return next(HttpError(401, "Not authorized"));
     }
-  };
-module.exports = { logout,getCurrentUser };
+
+    res.json({
+      email: user.email,
+      subscription: user.subscription,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+module.exports = { logout, getCurrentUser };
