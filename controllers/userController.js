@@ -1,4 +1,6 @@
 const { HttpError } = require("../helpers/HttpError");
+const User = require('../models/users')
+
 
 const logout = async (req, res, next) => {
   const userId = req.user._id;
