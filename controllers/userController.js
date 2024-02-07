@@ -23,7 +23,7 @@ const logout = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   const userId = req.user._id;
-
+console.log(req.user)
   try {
     const user = await User.findById(userId);
 

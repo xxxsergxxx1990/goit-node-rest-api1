@@ -6,12 +6,12 @@ const controller = require("../controllers/auth/register");
 const controllerLogin = require("../controllers/auth/login");
 
 router.post(
-  "/users/register",
+  "/register",
   validateBody(sсhema.userSchema),
   controller.registration
 );
 router.post(
-  "/users/login",
+  "/login",
   validateBody(sсhema.userSchema),
   controllerLogin.login
 );

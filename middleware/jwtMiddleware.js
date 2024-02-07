@@ -6,23 +6,31 @@ const jwtMiddlewar = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    next(HttpError(401, "Unauthorized: Token is missing"));
+    return next(HttpError(401, "Unauthorized: Token is missing"));
   }
 
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    // Перевірка типу токену
+    const [tokenType, tokenValue] = token.split(' ');
+
+    if (tokenType !== 'Bearer') {
+      return next(HttpError(401, 'Unauthorized: Invalid token type'));
+    }
+
+    const decodedToken = jwt.verify(tokenValue, process.env.JWT_SECRET);
     const user = await User.findById(decodedToken.id);
 
-    if (!user || token !== user.token) {
-      next(HttpError(401, "Unauthorized: Invalid token"));
+    if (!user || tokenValue !== user.token) {
+      return next(HttpError(401, 'Unauthorized: Invalid token'));
     }
 
     req.user = user;
 
-    next();
+    return next();
   } catch (error) {
-    next(HttpError(401, "Unauthorized: Invalid token"));
+    return next(HttpError(401, 'Unauthorized: Invalid token'));
   }
 };
+
 
 module.exports = jwtMiddlewar;

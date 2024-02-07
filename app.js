@@ -16,9 +16,9 @@ app.use(morgan("tiny"));
 app.use(cors());
 
 app.use("/api/contacts", contactsRouter);
-app.use("/", authRouter);
+app.use("/users", authRouter);
 app.use("/users", usersRouter);
-app.use("/users", usersRouter);
+
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
