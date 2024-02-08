@@ -10,7 +10,7 @@ const jwtMiddlewar = async (req, res, next) => {
   }
 
   try {
-    // Перевірка типу токену
+   
     const [tokenType, tokenValue] = token.split(' ');
 
     if (tokenType !== 'Bearer') {
@@ -19,16 +19,14 @@ const jwtMiddlewar = async (req, res, next) => {
 
     const decodedToken = jwt.verify(tokenValue, process.env.JWT_SECRET);
     const user = await User.findById(decodedToken.id);
-
-    if (!user || tokenValue !== user.token) {
-      return next(HttpError(401, 'Unauthorized: Invalid token'));
-    }
+   console.log(tokenType)
+  
 
     req.user = user;
 
     return next();
   } catch (error) {
-    return next(HttpError(401, 'Unauthorized: Invalid token'));
+    return next(HttpError(401, 'Unauthorized:  token'));
   }
 };
 

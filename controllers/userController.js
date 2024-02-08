@@ -1,6 +1,5 @@
 const { HttpError } = require("../helpers/HttpError");
-const User = require('../models/users')
-
+const User = require("../models/users");
 
 const logout = async (req, res, next) => {
   const userId = req.user._id;
@@ -23,13 +22,9 @@ const logout = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   const userId = req.user._id;
-console.log(req.user)
+  console.log(req.user);
   try {
     const user = await User.findById(userId);
-
-    if (!user) {
-      return next(HttpError(401, "Not authorized"));
-    }
 
     res.json({
       email: user.email,
