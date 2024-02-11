@@ -10,7 +10,7 @@ const contactsRouter = require("./routes/contactsRouter");
 const authRouter = require("./routes/auth");
 const app = express();
 const usersRouter = require("./routes/usersRouter");
-const jwtMiddlewar = require('./middleware/jwtMiddleware')
+
 
 
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 
 
-app.use('',jwtMiddlewar)
+
 app.use("/api/contacts", contactsRouter);
 app.use("/users", authRouter);
 app.use("/users", usersRouter);
