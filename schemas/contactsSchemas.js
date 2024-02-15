@@ -20,10 +20,12 @@ const updatefavoriteSchema = Joi.object({
 const userSchema = Joi.object({
     email:Joi.string().required(),
     password:Joi.string().required(),
-    avatarURL: Joi.string().required()
+    
 })
 
-
+const avatarAchema = Joi.object({
+    avatarURL: Joi.string().required()
+})
 
 
 module.exports = {

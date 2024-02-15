@@ -18,7 +18,7 @@ router.post(
 );
 router.patch(
   "/avatars",
-  validateBody(sсhema.userSchema),
+  
   upload.single("avatar"),
   updateAvatar
 );
