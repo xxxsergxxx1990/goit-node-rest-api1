@@ -5,4 +5,5 @@ const userController = require("../controllers/userController");
 
 router.post("/logout", authenticateToken, userController.logout);
 router.get("/current", authenticateToken, userController.getCurrentUser);
+
 module.exports = router;

@@ -10,11 +10,11 @@ const auth = async (req, res, next) => {
   const [type, token] = authHeader.split(" ");
 
   if (type !== "Bearer" || !token) {
-    throw RequestError(401, "Token type is not valid!");
+    throw HttpError(401, "Token type is not valid!");
   }
 
   if (!token) {
-    throw RequestError(401, "No token provided");
+    throw HttpError(401, "No token provided");
   }
 
   try {
@@ -26,10 +26,10 @@ const auth = async (req, res, next) => {
     req.user = user;
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw RequestError(401, "Token expired");
+      throw HttpError(401, "Token expired");
     }
     if (error instanceof jwt.JsonWebTokenError) {
-      throw RequestError(401, "Invalid token");
+      throw HttpError(401, "Invalid token");
     }
   }
   next();

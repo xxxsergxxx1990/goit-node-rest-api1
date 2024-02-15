@@ -4,7 +4,8 @@ const validateBody = require("../helpers/validateBody");
 const sсhema = require("../schemas/contactsSchemas");
 const controller = require("../controllers/auth/register");
 const controllerLogin = require("../controllers/auth/login");
-
+const upload = require('../middleware/upload')
+const updateAvatar = require('../controllers/auth/updateAvatar')
 router.post(
   "/register",
   validateBody(sсhema.userSchema),
@@ -15,5 +16,10 @@ router.post(
   validateBody(sсhema.userSchema),
   controllerLogin.login
 );
-
+router.patch(
+  "/avatars",
+  validateBody(sсhema.userSchema),
+  upload.single("avatar"),
+  updateAvatar
+);
 module.exports = router;
