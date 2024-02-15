@@ -2,10 +2,16 @@ const User = require("../../models/users");
 const { HttpError } = require("../../helpers/HttpError");
 const bcrypt = require("bcrypt");
 const gravatar = require('gravatar');
+const { promisify } = require('util');
+const jimp = require('jimp');
+
 const jimpRead = promisify(jimp.read);
+
+
+
 const registration = async (req, res, next) => {
   const { email, password } = req.body;
-
+  
   const avatarUrl = gravatar.url(email, { s: '250', r: 'pg', d: 'mm' });
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
