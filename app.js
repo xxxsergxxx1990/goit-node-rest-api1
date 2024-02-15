@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/contacts", contactsRouter);
 app.use("/users", authRouter);
 app.use("/users", usersRouter);
-
+app.use("/avatars",authRouter)
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
