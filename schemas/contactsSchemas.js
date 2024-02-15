@@ -32,5 +32,6 @@ module.exports = {
     createContactSchema,
     updateContactSchema,
     updatefavoriteSchema,
-    userSchema
+    userSchema,
+    avatarAchema
 }
