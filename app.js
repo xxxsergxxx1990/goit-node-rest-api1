@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
-
+const path = require('path')
 const { DB_HOST } = process.env;
 
 const contactsRouter = require("./routes/contactsRouter");
@@ -18,7 +18,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 
 
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/contacts", contactsRouter);
 app.use("/users", authRouter);
 app.use("/users", usersRouter);
