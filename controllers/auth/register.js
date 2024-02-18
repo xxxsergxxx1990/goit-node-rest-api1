@@ -29,7 +29,8 @@ console.log(avatar)
     avatar.resize(250, 250);
 
     
-    await avatar.writeAsync(result.avatar);
+    const avatarPath = path.join(avatarDir, filename);
+    await avatar.writeAsync(avatarPath);
 
     res.status(201).json({
       id: result._id,
