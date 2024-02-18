@@ -5,7 +5,7 @@ const gravatar = require('gravatar');
 const axios = require('axios');
 const { promisify } = require('util');
 const jimp = require('jimp');
-
+const avatarDir = path.join(__dirname, "../", "public", "avatars");
 const jimpRead = promisify(jimp.read);
 
 const registration = async (req, res, next) => {
