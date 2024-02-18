@@ -1,6 +1,7 @@
 const User = require("../../models/users");
 const { HttpError } = require("../../helpers/HttpError");
 const bcrypt = require("bcrypt");
+const path = require('path')
 const gravatar = require('gravatar');
 const axios = require('axios');
 const { promisify } = require('util');
